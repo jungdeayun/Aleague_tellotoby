@@ -34,7 +34,8 @@ count=0;
 max=0;
 takeoff(drone);
 preview(cam);
-%초록색 링 인지
+
+%초록색 링 인식
 while 1
     frame=snapshot(cam);%화면 캡쳐
     hsv = rgb2hsv(frame);%rgb값을 hsv값으로 변환
@@ -42,13 +43,13 @@ while 1
     s = hsv(:,:,2);
     v = hsv(:,:,3);
     green=(0.35<h)&(h<0.45)&(0.65<s)&(s<0.95);%색에 대해 조건이 맞으면 1로, 조건에 안맞으면 0으로 반환됨
-%링이 왼쪽 or 오른쪽에 있는지 판단 후 이동 및 없으면 위로 이동
+    %링이 왼쪽 or 오른쪽에 있는지 판단 후 이동 및 없으면 위로 이동
     if sum(imcrop(bw2,[0 0 480 720]),'all')-sum(imcrop(bw2,[480 0 960 720]),'all')>10000 %x축을 기준으로 반으로 잘라 좌우 비교
         moveleft(drone,'distance',0.3); %왼쪽이 많으면 왼쪽으로 이동
     elseif sum(imcrop(bw2,[480 0 960 720]),'all')-sum(imcrop(bw2,[0 0 480 720]),'all')>10000
         moveright(drone,'distance',0.3); %오른쪽이 많으면 오른쪽으로 이동
     else
-        moveup(drone,'distance',0.3); %비슷하다고 인지하면 위로 이동(링이 보이지 않은 경우)
+        moveup(drone,'distance',0.3); %비슷하다고 인식하면 위로 이동(링이 보이지 않은 경우)
     end
     %imfill의 한계를 극복하기 위해 구멍을 만들어주기 위해 첫행을 1로 변환
     for i=1:960
@@ -63,11 +64,13 @@ while 1
             end
         end
     end
+    
     %링이 인식되면 반복문 탈출
     if sum(bw2,'all')>1000
         break;
     end
 end
+
 %중점 찾기
 while 1
     frame=snapshot(cam);
@@ -102,6 +105,7 @@ while 1
             firstCenter(1,2)=round(y(i,2));
         end
     end
+    
     %firstCenter와 처음 설정한 이상중점을 비교
     %x축 오차 49, y축 오차 30정도를 주고 중점으로 이동
     if firstCenter(1,1)-originCenter(1,1)>=49
@@ -118,22 +122,23 @@ while 1
         moveup(drone,'Distance',0.2);
         disp("up");
     end
-%중점으로 인지하면 전진
+%중점으로 인식하면 전진
     if firstCenter(1,2)-originCenter(1,2)<30 && firstCenter(1,2)-originCenter(1,2)>-30 && firstCenter(1,1)-originCenter(1,1)<49 && firstCenter(1,1)-originCenter(1,1)>-49
         moveforward(drone,'Distance',2.7);
         break;
     end
 end
-while 1
+
 %빨간색 점 인식
+while 1
 frame=snapshot(cam);
 hsv = rgb2hsv(frame);
 h = hsv(:,:,1);
 s = hsv(:,:,2);
 v = hsv(:,:,3);
 red= ((0.80<h)&(h<1)|(0<h)&(h<0.1))&(0.6<s)&(s<0.9)&(0.2<v)&(v<0.5);
-%빨간색의 값이 400픽셀이 넘으면 인지했다고 파악 
-%인지하면 90도 회전 후 반복문 탈출
+%빨간색의 값이 400픽셀이 넘으면 인식했다고 파악 
+%인식하면 90도 회전 후 반복문 탈출
 if sum(red,'all')>400
     turn(drone,deg2rad(-90))
     break;
@@ -149,5 +154,23 @@ while 1
         movedown(drone,'distance',0.3);
     end
 end
-    clearvars max
+    clearvars max %max변수 초기화
+
+%파란색 점 인식
+while 1
+frame=snapshot(cam);
+hsv = rgb2hsv(frame);
+h = hsv(:,:,1);
+s = hsv(:,:,2);
+v = hsv(:,:,3);
+blue= (0.55<h)&(h<0.7)&(0.5<s)&(s<0.7)&(0.2<v)&(v<0.5);
+%파란색의 값이 400픽셀이 넘으면 인식했다고 파악 
+%인식하면 착륙 후 반복문 탈출
+if sum(blue,'all')>400
+    land(drone);
+    disp("goal")
+    break;
+end
+end
+
 ```
