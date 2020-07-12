@@ -27,7 +27,7 @@
 <br></br>
 ## 3. 소스코드 설명
 
-- **드론 설정 및 
+- **드론 설정 및 takeoff**
 ```matlab
 clear;
 drone=ryze(); 
