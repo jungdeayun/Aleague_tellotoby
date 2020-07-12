@@ -8,7 +8,7 @@
  
 <br></br>
 ## 2. 알고리즘 설명
-![블럭도](/readmeFile/Algorithm.png)
+![알고리즘도](/readmeFile/알고리즘.png)
 
 1. 드론 이륙
 
