@@ -26,6 +26,8 @@
 ## 2. 알고리즘 설명
 <br></br>
 ## 3. 소스코드 설명
+
+- **드론 설정 및 
 ```matlab
 clear;
 drone=ryze(); 
@@ -35,8 +37,10 @@ count=0;
 max=0;
 takeoff(drone);
 preview(cam);
+```
 
-%초록색 링 인식
+- **초록색 링 인식**
+```matlab
 while 1
     frame=snapshot(cam);%화면 캡쳐
     hsv = rgb2hsv(frame);%rgb값을 hsv값으로 변환
@@ -71,8 +75,9 @@ while 1
         break;
     end
 end
-
-%중점 찾기
+```
+- **중점 찾기**
+```matlab
 while 1
     frame=snapshot(cam);
     hsv = rgb2hsv(frame);
@@ -129,8 +134,9 @@ while 1
         break;
     end
 end
-
-%빨간색 점 인식
+```
+- **빨간색 점 인식**
+```matlab
 while 1
 frame=snapshot(cam);
 hsv = rgb2hsv(frame);
@@ -156,8 +162,9 @@ while 1
     end
 end
     clearvars max %max변수 초기화
-
-%파란색 점 인식
+```
+- **파란색 점 인식**
+```matlab
 while 1
 frame=snapshot(cam);
 hsv = rgb2hsv(frame);
@@ -173,5 +180,4 @@ if sum(blue,'all')>400
     break;
 end
 end
-
 ```
