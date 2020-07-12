@@ -2,10 +2,15 @@
 [![Generic badge](https://img.shields.io/badge/Tello-Toby-blue.svg)](https://shields.io/)
 
 ![드론관점주행](/readmeFile/드론관점주행.gif) 
-
+<br></br>
 ## 1. 대회 진행 전략
 
- 1. 드론 이륙
+ 
+<br></br>
+## 2. 알고리즘 설명
+![블럭도](/readmeFile/Algorithm.png)
+
+1. 드론 이륙
 
 - **이미지 전처리**
  2. 텔로 드론의 영상을 받아와 [Snapshot](https://kr.mathworks.com/help/supportpkg/ryzeio/ref/snapshot.html) 함수를 이용하여 사진 영상을 가져옴
@@ -22,8 +27,6 @@
  9. 링 통과를 한 후 빨간색 원을 발견하게 되는데, 이 때 픽셀 수를 합하여 **500이 넘으면 좌회전**을 하고, **500이 넘지 못하면 후진**을 하여 다시 찾음
  10. 마지막으로 파란색 원을 발견하게 되면 위와 같이 **500이 넘으면 착지**하고, 아니면 **후진**하여 다시 찾음
 
-<br></br>
-## 2. 알고리즘 설명
 <br></br>
 ## 3. 소스코드 설명
 
