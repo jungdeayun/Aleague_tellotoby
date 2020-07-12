@@ -4,7 +4,7 @@
 ![드론관점주행](/readmeFile/드론관점주행.gif) 
 <br></br>
 ## 1. 대회 진행 전략
-
+![전략](/readmeFile/전략.png)
  
 <br></br>
 ## 2. 알고리즘 설명
