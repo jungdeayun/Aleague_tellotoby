@@ -9,7 +9,7 @@
 - **이미지 전처리**
  2. 텔로 드론의 영상을 받아와 [Snapshot](https://kr.mathworks.com/help/supportpkg/ryzeio/ref/snapshot.html) 함수를 이용하여 사진 영상을 가져옴
  3. RGB 색 공간에서 HSV 색 공간으로 변경함
- 4. ```html <span style="color:green">초록색</span>``` 링 통과를 위해 HSV 색 공간을 통하여 초록색을 찾고 링만 인식하기 위해 이진화를 실행함
+ 4. ```diff + 초록색``` 링 통과를 위해 HSV 색 공간을 통하여 초록색을 찾고 링만 인식하기 위해 이진화를 실행함
  5. 회전점인 <span style="color:red">빨간색</span>과 착지점인 <span style="color:blue">파란색</span>도 동일하게 이진화를 실행함
 
 - **드론 제어**
