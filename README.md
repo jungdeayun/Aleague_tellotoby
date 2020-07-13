@@ -42,6 +42,7 @@ max=0;
 takeoff(drone);
 preview(cam);
 ```
+- **링 구멍 찾기**
 ```matlab
 %총 3단계로 설정
 for level=1:3
