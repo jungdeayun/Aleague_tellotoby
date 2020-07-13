@@ -152,7 +152,7 @@ for level=1:3
             moveforward(drone,'Distance',2.6);
         end
 ```
-- **초록색 링 인식**
+- **빨간점 인식**
 ```matlab
         %빨간점 찾기
         while 1
