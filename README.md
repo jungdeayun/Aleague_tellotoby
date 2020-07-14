@@ -1,6 +1,6 @@
 # 미니드론 자율주행 경진대회 A리그 텔로토비팀!🚀
 
-군산대학교 리그 A 텔로토비팀! ![TelloToby](https://img.shields.io/badge/Tello-Toby-green.svg)](https://github.com/jungdeayun/Aleague_tellotoby)
+군산대학교 리그 A 텔로토비팀! [![TelloToby](https://img.shields.io/badge/Tello-Toby-green.svg)](https://github.com/jungdeayun/Aleague_tellotoby)
 
 ![드론관점주행](/readmeFile/drone.gif) 
 <br></br>
