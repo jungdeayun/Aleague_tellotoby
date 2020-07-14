@@ -1,5 +1,5 @@
 # 미니드론 자율주행 경진대회 A리그 텔로토비팀!🚀
-[![TelloToby](https://img.shields.io/badge/Tello-Toby-blue.svg)](https://github.com/jungdeayun/Aleague_tellotoby)
+[![TelloToby](https://img.shields.io/badge/Tello-Toby-green.svg)](https://github.com/jungdeayun/Aleague_tellotoby)
 
 
 ![드론관점주행](/readmeFile/drone.gif) 
@@ -35,23 +35,27 @@
  11. 링 통과를 한 후 빨간색 원을 발견하게 되는데, 이 때 픽셀 수를 합하여 **400이 넘으면 좌회전**을 하고, **400이 넘지 못하면 후진**을 하여 다시 찾음
  12. 마지막으로 파란색 원을 발견하게 되면 위와 같이 **300이 넘으면 착지**하고, 아니면 **후진**하여 다시 찾음
 
-![전략](/readmeFile/알고리즘 영상.png)
+---
+- **영상처리**
+
+![알고리즘영상](/readmeFile/알고리즘영상.png)
 
 <br></br>
 ## 3. 소스코드 설명
 
 - **드론 설정 및 takeoff**
 ```matlab
-clear;
+
 drone=ryze(); 
 cam=camera(drone);
-originCenter=[480 200; 480 170; 480 170];
+originCenter=[480 170; 480 170; 480 170];
 count=0;
 max=0;
+none=0;
 takeoff(drone);
 preview(cam);
 ```
-- **구멍 찾기**
+- **링 구멍 찾기**
 ```matlab
 %총 3단계로 설정
 for level=1:3
@@ -68,7 +72,6 @@ for level=1:3
         for i=1:960
         green(1,i)=1;
         end
-        %마지막 행을 1로 
         for i=1:960
         green(720,i)=1;
         end
@@ -92,19 +95,26 @@ for level=1:3
                 moveleft(drone,'distance',0.5,'speed',1);
             elseif sum(imcrop(green,[480 0 960 720]),'all')-sum(imcrop(green,[0 0 480 720]),'all')>10000
                 moveright(drone,'distance',0.5,'speed',1);
-            elseif sum(imcrop(green,[0 0 960 360]),'all')-sum(imcrop(green,[0 360 960 720]),'all')>10000
+            end
+            if sum(imcrop(green,[0 0 960 360]),'all')-sum(imcrop(green,[0 360 960 720]),'all')>10000
                 moveup(drone,'distance',0.4,'speed',1);
             elseif sum(imcrop(green,[0 360 960 720]),'all')-sum(imcrop(green,[0 0 960 360]),'all')>10000
                 movedown(drone,'distance',0.4,'speed',1);
-            elseif sum(bw2,'all')<1000
-                moveright(drone,'distance',0.5);
             end
+            if sum(green,'all')<10000
+                if none==0
+                moveup(drone,'distance',0.3,'speed',1);
+                moveleft(drone,'distance',0.3,'speed',1);
+                none=none+1;
+                elseif none==1
+                moveright(drone,'distance',0.6,'speed',1);
+                end
+            end 
         end
     end
 ```
-- **구멍에 대한 중점 찾기**
+- **랑 구멍에 대한 중점 찾기**
 ```matlab
-    %구멍에 대한 중점 찾기
     while 1
         %초록색에 대한 HSV값 설정 및 이진화
         frame=snapshot(cam);
@@ -117,7 +127,6 @@ for level=1:3
         for i=1:960
             green(1,i)=1;
         end
-        %마지막 행을 1로 변환
         for i=1:960
             green(720,i)=1;
         end
@@ -135,7 +144,7 @@ for level=1:3
         stats = regionprops('table',bw2, 'Centroid', 'MinorAxisLength');
         z=stats.MinorAxisLength;
         max=0;
-        y=stats.Centroid; %중점 찾아주는 변수
+        y=stats.Centroid;
         %보조축의 크기가 가장 큰 곳의 중점을 가져옴
         for i=1:size(stats)
             if z(i,1)>=max
@@ -144,11 +153,10 @@ for level=1:3
                 firstCenter(1,2)=round(y(i,2));
             end
         end
-        disp(firstCenter); %firstCenter 출력
-        clearvars max %max변수 초기화
+        clearvars max
         %측정된 중점과 이상 중점을 비교하여 이동
         if firstCenter(1,1)-originCenter(level,1)>=40
-            moveright(drone,'Distance',0.2,'speed',1);
+            moveright(drone,'Distance',0.3,'speed',1);
             disp("right");
         elseif firstCenter(1,1)-originCenter(level,1)<=-40
             moveleft(drone,'Distance',0.2,'speed',1);
@@ -174,8 +182,8 @@ for level=1:3
             moveforward(drone,'Distance',2.4,'speed',1);
         end
 ```
-- **빨간점 인식**
-```
+- **빨간색 점 인식**
+```matlab
         while 1
             %빨간색에 대한 HSV값 설정 및 이진화
             frame=snapshot(cam);
@@ -202,14 +210,13 @@ for level=1:3
             moveforward(drone,'Distance',0.8,'speed',1);
         elseif level==2
             moveforward(drone,'distance',1,'speed',1);
-            moveright(drone,'Distance',0.2,'speed',1);
         end
         %3단계일 때 실행
     elseif level==3
-        moveforward(drone,'Distance',2.1,'speed',1);
+        moveforward(drone,'Distance',2.2,'speed',1);
 ```
-- **파란색 점 인식**
-```
+- **파란색 점 인식** 
+```matlab
         while 1
             %파란색에 대한 HSV값 설정 및 이진화
             frame=snapshot(cam);
