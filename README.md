@@ -1,12 +1,11 @@
 # 미니드론 자율주행 경진대회 A리그 텔로토비팀!🚀
-[![Generic badge](https://img.shields.io/badge/Tello-Toby-blue.svg)](https://github.com/jungdeayun/Aleague_tellotoby) 
+[![TelloToby](https://img.shields.io/badge/Tello-Toby-blue.svg)](https://github.com/jungdeayun/Aleague_tellotoby) 
 
 ![드론관점주행](/readmeFile/drone.gif) 
 <br></br>
 ## 1. 대회 진행 전략
 ![전략](/readmeFile/전략.png)
-### 저희 팀의 전략은 상하좌우의 픽셀 수를 비교해 이동하여 초록색 링을 인식하게 하여 구멍을 찾은 뒤, 드론 영상 크기의 중심점과 드론 영상의 링 구멍의 중심점의 차이를 계산하여 통과하도록 합니다.
-### 빨간색 점과 파란색 점도 똑같이 픽셀 수를 이용해 90도 회전 또는 착지하도록 합니다.
+### 저희 팀의 전략은 상하좌우의 픽셀 수를 비교해 이동하여 초록색 링을 인식하게 하여 구멍을 찾은 뒤, 드론 영상 크기의 중심점과 드론 영상의 링 구멍의 중심점의 차이를 계산하여 통과하도록 합니다.  빨간색 점과 파란색 점도 똑같이 픽셀 수를 이용해 90도 회전 또는 착지하도록 합니다.
 
 <br></br>
 ## 2. 알고리즘 설명
