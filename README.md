@@ -102,6 +102,7 @@ for level=1:3
             elseif sum(imcrop(green,[0 360 960 720]),'all')-sum(imcrop(green,[0 0 960 360]),'all')>10000
                 movedown(drone,'distance',0.4,'speed',1);
             end
+            % 링 인식을 못하였을 경우
             if sum(green,'all')<10000
                 if none==0
                 moveup(drone,'distance',0.3,'speed',1);
