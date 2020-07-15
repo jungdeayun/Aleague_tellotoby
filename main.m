@@ -6,7 +6,6 @@ originCenter=[480 170; 480 170; 480 170];
 count=0;
 max=0;
 none=0;
-preview(cam);
 takeoff(drone);
 %총 3단계로 설정
 for level=1:3
@@ -39,7 +38,6 @@ for level=1:3
         end
         %변환한 이미지의 픽셀 수가 1000이상이면 구멍을 인식했다고 파악
         %1000이하이면 상승하여 전 과정을 다시 반복
-        imshow(bw2);
         if sum(bw2,'all')>1000
             break;
         else
@@ -92,7 +90,6 @@ for level=1:3
                 end
             end
         end
-        imshow(bw2);
         %이미지에서 인식된 곳들의 중점과 보조축의 크기를 구함
         stats = regionprops('table',bw2, 'Centroid', 'MinorAxisLength');
         z=stats.MinorAxisLength;
@@ -120,7 +117,6 @@ for level=1:3
         end
         %오차범위 내에 있으면 반복문 탈출
         if firstCenter(1,2)-originCenter(level,2)<30 && firstCenter(1,2)-originCenter(level,2)>-30 && firstCenter(1,1)-originCenter(level,1)<40 && firstCenter(1,1)-originCenter(level,1)>-40
-            
             break;
         end
     end
