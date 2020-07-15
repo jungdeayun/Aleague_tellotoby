@@ -46,7 +46,6 @@
 
 - **드론 설정 및 takeoff**
 ```matlab
-
 drone=ryze(); 
 cam=camera(drone);
 originCenter=[480 170; 480 170; 480 170];
@@ -54,7 +53,6 @@ count=0;
 max=0;
 none=0;
 takeoff(drone);
-preview(cam);
 ```
 - **링 구멍 찾기**
 ```matlab
@@ -73,6 +71,7 @@ for level=1:3
         for i=1:960
         green(1,i)=1;
         end
+        %마지막 행을 1로 
         for i=1:960
         green(720,i)=1;
         end
@@ -102,14 +101,13 @@ for level=1:3
             elseif sum(imcrop(green,[0 360 960 720]),'all')-sum(imcrop(green,[0 0 960 360]),'all')>10000
                 movedown(drone,'distance',0.4,'speed',1);
             end
-            % 링 인식을 못하였을 경우
             if sum(green,'all')<10000
                 if none==0
                 moveup(drone,'distance',0.3,'speed',1);
                 moveleft(drone,'distance',0.3,'speed',1);
                 none=none+1;
                 elseif none==1
-                moveright(drone,'distance',0.6,'speed',1);
+                moveright(drone,'distance',1,'speed',1);
                 end
             end 
         end
@@ -129,6 +127,7 @@ for level=1:3
         for i=1:960
             green(1,i)=1;
         end
+        %마지막 행을 1로 변환
         for i=1:960
             green(720,i)=1;
         end
@@ -159,17 +158,13 @@ for level=1:3
         %측정된 중점과 이상 중점을 비교하여 이동
         if firstCenter(1,1)-originCenter(level,1)>=40
             moveright(drone,'Distance',0.3,'speed',1);
-            disp("right");
         elseif firstCenter(1,1)-originCenter(level,1)<=-40
             moveleft(drone,'Distance',0.2,'speed',1);
-            disp("left");
         end
         if firstCenter(1,2)-originCenter(level,2)>=30
             movedown(drone,'Distance',0.3,'speed',1);
-            disp("down");
         elseif firstCenter(1,2)-originCenter(level,2)<=-30
             moveup(drone,'Distance',0.2,'speed',1);
-            disp("up");
         end
         %오차범위 내에 있으면 반복문 탈출
         if firstCenter(1,2)-originCenter(level,2)<30 && firstCenter(1,2)-originCenter(level,2)>-30 && firstCenter(1,1)-originCenter(level,1)<40 && firstCenter(1,1)-originCenter(level,1)>-40
