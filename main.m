@@ -23,6 +23,7 @@ for level=1:3
         for i=1:960
         green(1,i)=1;
         end
+        %마지막 행을 1로 변환
         for i=1:960
         green(720,i)=1;
         end
@@ -77,6 +78,7 @@ for level=1:3
         for i=1:960
             green(1,i)=1;
         end
+        %마지막 행을 1로 변환
         for i=1:960
             green(720,i)=1;
         end
